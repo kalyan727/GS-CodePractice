@@ -1,0 +1,58 @@
+import java.io.*;
+import java.util.*;
+
+/*
+ * To execute Java, please define "static void main" on a class
+ * named Solution.
+ *
+ * If you need more classes, simply define them inline.
+ */
+
+class Solution {
+  public static void main(String[] args) {
+   
+    String input = "If you need more classes, simply define them inline";
+    
+    findMissingLetters(input);
+    
+  }
+  
+  private static void findMissingLetters(String input){
+    
+    input = input.toLowerCase().replaceAll("\\s","");
+  
+    Set<Character> set = new TreeSet<>();
+    List<Integer> list = new ArrayList<>();
+    Map<Integer,Integer> map = new LinkedHashMap<>();
+    
+    for(Character c: input.toCharArray())
+       if(Character.isLetter(c))
+         set.add(c);
+   
+    for(int i=97;i<123;i++){
+      list.add(i);
+    }
+     
+     for(Character c1: set){
+        int i = c1;
+        list.add(i);
+    }
+    
+    
+    for(Integer in: list){
+      if(map.containsKey(in))
+        map.put(in, map.get(in)+1);
+      else
+         map.put(in,1);
+    }
+    
+    System.out.print("Missing letters are: ");
+    
+    for(Map.Entry<Integer,Integer> m: map.entrySet())
+      if(m.getValue() == 1){
+        int i2 = m.getKey();
+     
+        System.out.print((char) i2 +" ");
+    }
+  }
+}
