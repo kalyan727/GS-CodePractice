@@ -1,0 +1,57 @@
+
+public class StringPattern {
+
+	static int sum = 0;
+
+	public static void main(String[] args) {
+
+		int wordLen = 4;
+		int maxVowels = 2;
+		char[] pattern = { 'v', 'c' };
+
+		int finalSum = findCombinations(pattern, wordLen, maxVowels, "");
+		System.out.println("Possible Solutions: "+ finalSum);
+	}
+
+	public static int findCombinations(char[] pattern, int wordLen, int maxVowels, String str) {
+
+		if (str.length() == wordLen) {
+
+			int count = 0;
+			int v = (int) pattern[0] - 113;
+			int c = (int) pattern[1] - 78;
+
+			for (int i = 0; i < str.length() - 1; i++) {
+
+				if (i < str.length() - maxVowels) {
+
+					String subStr = str.substring(i, i + maxVowels + 1);
+
+					if (subStr.contains("c")) {
+						count++;
+					}
+				}
+			}
+
+			if (count == str.length() - maxVowels) {
+
+				int prod = 1;
+				for (int i = 0; i < str.length(); i++) {
+					if (str.charAt(i) == 'c')
+						prod *= c;
+					else
+						prod *= v;
+				}
+				sum += prod;
+			}
+		} else {
+			for (char c : pattern) {
+				String temp = str;
+				str += c;
+				findCombinations(pattern, wordLen, maxVowels, str);
+				str = temp;
+			}
+		}
+		return sum;
+	}
+}
